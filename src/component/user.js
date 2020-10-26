@@ -1,45 +1,71 @@
-import React, { useState } from "react";
+import React from "react";
 import FacebookLogin from "react-facebook-login";
 import { Card, Image } from "react-bootstrap";
+import API from "../utils/api";
 
-function User() {
-  const [login, setLogin] = useState(false);
-  const [data, setData] = useState({});
-  const [picture, setPicture] = useState("");
+class User extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      login: false,
+      data: {},
+      picture: "",
+    };
+  }
 
-  const responseFacebook = (response) => {
-    console.log(response);
-    setData(response);
-    setPicture(response.picture.data.url);
-    if (response.accessToken) {
-      setLogin(true);
-    } else {
-      setLogin(false);
-    }
+  fillValidUserInfo(response) {
+    this.setState({
+      login: true,
+      data: response,
+      picture: response.picture.data.url,
+    });
+  }
+
+  responseFacebook = async (response) => {
+    const body = new FormData();
+    body.append("name", response.name);
+    body.append("app-token", response.accessToken);
+    body.append("userID", response.userID);
+
+    // Send data to backend server to validate
+    await API.post("/login", body, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((res) => {
+        this.fillValidUserInfo(response);
+        console.log(res.data);
+      })
+      .catch((reason) => console.log(reason.response.statusText));
   };
 
-  return (
-    <Card style={{ width: "600px" }}>
-      <Card.Header>
-        {!login && (
-          <FacebookLogin
-            appId="145792170193635"
-            autoLoad={false}
-            fields="name,email,picture"
-            scope="public_profile"
-            callback={responseFacebook}
-            icon="fa-facebook"
-          />
+  render() {
+    console.log("render");
+    return (
+      <Card style={{ width: "600px" }}>
+        <Card.Header>
+          {this.login ? (
+            <Image src={this.picture} roundedCircle />
+          ) : (
+            <FacebookLogin
+              appId="145792170193635"
+              autoLoad={false}
+              fields="name,email,picture"
+              scope="public_profile"
+              callback={this.responseFacebook}
+              icon="fa-facebook"
+            />
+          )}
+        </Card.Header>
+        {this.login && (
+          <Card.Body>
+            <Card.Title>{this.data.name}</Card.Title>
+          </Card.Body>
         )}
-        {login && <Image src={picture} roundedCircle />}
-      </Card.Header>
-      {login && (
-        <Card.Body>
-          <Card.Title>{data.name}</Card.Title>
-        </Card.Body>
-      )}
-    </Card>
-  );
+      </Card>
+    );
+  }
 }
 
 export default User;
