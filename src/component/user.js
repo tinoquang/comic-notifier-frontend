@@ -14,6 +14,7 @@ class User extends React.Component {
   }
 
   fillValidUserInfo(response) {
+    console.log("set state");
     this.setState({
       login: true,
       data: response,
@@ -35,18 +36,16 @@ class User extends React.Component {
     })
       .then((res) => {
         this.fillValidUserInfo(response);
-        console.log(res.data);
       })
       .catch((reason) => console.log(reason.response.statusText));
   };
 
   render() {
-    console.log("render");
     return (
       <Card style={{ width: "600px" }}>
         <Card.Header>
-          {this.login ? (
-            <Image src={this.picture} roundedCircle />
+          {this.state.login ? (
+            <Image src={this.state.picture} roundedCircle />
           ) : (
             <FacebookLogin
               appId="145792170193635"
@@ -58,9 +57,9 @@ class User extends React.Component {
             />
           )}
         </Card.Header>
-        {this.login && (
+        {this.state.login && (
           <Card.Body>
-            <Card.Title>{this.data.name}</Card.Title>
+            <Card.Title>{this.state.data.name}</Card.Title>
           </Card.Body>
         )}
       </Card>
