@@ -14,7 +14,6 @@ class User extends React.Component {
   }
 
   fillValidUserInfo(response) {
-    console.log("set state");
     this.setState({
       login: true,
       data: response,
@@ -23,6 +22,9 @@ class User extends React.Component {
   }
 
   responseFacebook = async (response) => {
+    if (response.status === "unknown") {
+      return;
+    }
     const body = new FormData();
     body.append("name", response.name);
     body.append("app-token", response.accessToken);
@@ -49,7 +51,7 @@ class User extends React.Component {
           ) : (
             <FacebookLogin
               appId="145792170193635"
-              autoLoad={false}
+              autoLoad={true}
               fields="name,email,picture"
               scope="public_profile"
               callback={this.responseFacebook}
