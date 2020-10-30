@@ -1,13 +1,9 @@
 import React from "react";
 import "./App.css";
-import User from "./component/user";
+import Login from "./component/login";
 
 function App() {
-  return (
-    <div className="container">
-      <User />
-    </div>
-  );
+  return <Login />;
 }
 
 export default App;
