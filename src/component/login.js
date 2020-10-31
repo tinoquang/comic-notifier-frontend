@@ -4,6 +4,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     heigth: "100%",
     display: "flex",
+    backgroundImage: `url("${process.env.PUBLIC_URL + "/assets/bg-3.png"}")`,
     justifyContent: "center",
   },
   container: {
@@ -20,22 +21,28 @@ const useStyles = makeStyles((theme) => ({
     width: "60%",
   },
   banner: {
+    // backgroundColor: "rgba(255,255,0,0.8)",
+    borderRadius: "2%",
     margin: "auto 0",
     fontFamily: "Itim",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    backgroundColor: "smoking-white",
   },
   logo: {
     margin: "auto",
   },
   botName: {
-    marginBottom: "50px",
     fontSize: "3rem",
   },
   loginButton: {
     fontSize: "2.5rem",
+    margin: "40px",
+    transition: "0.3s",
+    "&:hover": {
+      backgroundColor: "black",
+      color: "white",
+    },
   },
   slider: {
     display: "flex",
@@ -68,7 +75,7 @@ export default function Login() {
             className={classes.align}
             src={"/assets/bot-logo.jpg"}
             alt="slider"
-            style={{ height: "auto", width: "80%" }}
+            style={{ height: "auto", width: "60%" }}
           />
         </div>
       </div>
