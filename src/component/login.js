@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     heigth: "100%",
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     width: "60%",
   },
   banner: {
-    // backgroundColor: "rgba(255,255,0,0.8)",
+    backgroundColor: "rgba(255,255,255,0.8)",
     borderRadius: "2%",
     margin: "auto 0",
     fontFamily: "Itim",
@@ -55,11 +56,16 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
 
+  const login = () => {
+    window.location.assign(
+      `https://www.facebook.com/v8.0/dialog/oauth?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&state=${process.env.REACT_APP_STATE}`
+    );
+  };
   return (
     <div className={classes.root}>
       <div className={classes.container}>
         <div className={classes.login}>
-          <div className={`${classes.content} ${classes.banner}`}>
+          <div className={classes.banner}>
             <img
               className={classes.logo}
               src={"/assets/chatbot.svg"}
@@ -67,7 +73,9 @@ export default function Login() {
               style={{ height: "auto", width: "100%" }}
             ></img>
             <div className={classes.botName}>COMIC NOTIFY BOT</div>
-            <button className={classes.loginButton}>Login with facebook</button>
+            <button className={classes.loginButton} onClick={login}>
+              Log in with Facebook
+            </button>
           </div>
         </div>
         <div className={(classes.content, classes.slider)}>
