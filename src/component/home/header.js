@@ -2,6 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, IconButton, Toolbar } from "@material-ui/core";
 import SortIcon from "@material-ui/icons/Sort";
+import API from "../../utils/api";
+
 const useStyles = makeStyles({
   appbar: {
     background: "none",
@@ -26,6 +28,14 @@ const useStyles = makeStyles({
 const Header = () => {
   const classes = useStyles();
 
+  const logout = () => {
+    API.get("/logout")
+      .then((response) => {
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div>
       <AppBar className={classes.appbar}>
@@ -38,9 +48,7 @@ const Header = () => {
             />
             <div className={classes.appbarName}>Comic Notify</div>
           </div>
-          <IconButton>
-            <SortIcon />
-          </IconButton>
+          <IconButton onClick={logout}>Log Out</IconButton>
         </Toolbar>
       </AppBar>
     </div>

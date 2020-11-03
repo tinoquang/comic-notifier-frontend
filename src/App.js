@@ -20,7 +20,6 @@ class App extends React.Component {
         this.setState({
           isLogged: true,
         });
-        console.log(response);
       })
       .catch((err) => {
         console.log(err);
