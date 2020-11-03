@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Home from "./component/home";
+import Home from "./component/home/home";
 import API from "./utils/api";
 import Login from "./component/login";
 
