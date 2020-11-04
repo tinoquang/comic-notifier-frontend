@@ -1,72 +1,28 @@
 import React from "react";
-import FacebookLogin from "react-facebook-login";
-import { Card, Image } from "react-bootstrap";
 import API from "../utils/api";
+import { makeStyles } from "@material-ui/core";
 
-class User extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      login: false,
-      data: {},
-      picture: "",
-    };
-  }
+const useStyles = makeStyles((theme) => ({
+  root: {
+    boxSizing: "border-box",
+    height: "100%",
+    margin: "20px 0",
+    padding: "0 20px",
+    border: "1px solid red",
+  },
+}));
 
-  fillValidUserInfo(response) {
-    this.setState({
-      login: true,
-      data: response,
-      picture: response.picture.data.url,
-    });
-  }
-
-  responseFacebook = async (response) => {
-    if (response.status === "unknown") {
-      return;
-    }
-    const body = new FormData();
-    body.append("name", response.name);
-    body.append("app-token", response.accessToken);
-    body.append("userID", response.userID);
-
-    // Send data to backend server to validate
-    await API.post("/login", body, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((res) => {
-        this.fillValidUserInfo(response);
-      })
-      .catch((reason) => console.log(reason.response.statusText));
-  };
-
-  render() {
-    return (
-      <Card style={{ width: "600px" }}>
-        <Card.Header>
-          {this.state.login ? (
-            <Image src={this.state.picture} roundedCircle />
-          ) : (
-            <FacebookLogin
-              appId="145792170193635"
-              autoLoad={true}
-              fields="name,email,picture"
-              scope="public_profile"
-              callback={this.responseFacebook}
-              icon="fa-facebook"
-            />
-          )}
-        </Card.Header>
-        {this.state.login && (
-          <Card.Body>
-            <Card.Title>{this.state.data.name}</Card.Title>
-          </Card.Body>
-        )}
-      </Card>
-    );
-  }
-}
+const User = () => {
+  const classes = useStyles();
+  return (
+    <div className={classes.root}>
+      <img
+        src={
+          "https://scontent.fsgn2-5.fna.fbcdn.net/v/t1.0-1/p200x200/83012518_1297382840446432_5085035197343203328_o.jpg?_nc_cat=102&ccb=2&_nc_sid=7206a8&_nc_ohc=gfw1J1D_qAMAX_6ngTx&_nc_ht=scontent.fsgn2-5.fna&tp=6&oh=ead456a23715372618dc68fab27d9117&oe=5FC5E07A"
+        }
+      ></img>
+    </div>
+  );
+};
 
 export default User;

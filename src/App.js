@@ -9,7 +9,6 @@ class App extends React.Component {
     super();
 
     this.state = {
-      isLogged: false,
       user: {},
     };
   }
@@ -17,28 +16,23 @@ class App extends React.Component {
   checkLoginStatus() {
     API.get("/status")
       .then((response) => {
-        this.setState({
-          isLogged: true,
-        });
+        if (localStorage.getItem("logged") !== "true") {
+          localStorage.setItem("logged", "true");
+          this.setState({});
+        }
       })
       .catch((err) => {
-        console.log(err);
+        localStorage.removeItem("logged");
+        this.setState({});
       });
   }
-
-  handleLogin = (data) => {
-    this.setState({
-      isLogged: true,
-      user: data.user,
-    });
-  };
 
   componentDidMount() {
     this.checkLoginStatus();
   }
 
   render() {
-    return this.state.isLogged ? <Home /> : <Login />;
+    return localStorage.getItem("logged") === "true" ? <Home /> : <Login />;
   }
 }
 
