@@ -31,7 +31,6 @@ const Home = () => {
     const id = readCookie("upid");
     API.get(`/api/v1/users/${id}`)
       .then((response) => {
-        console.log(response);
         setUser({ ...response.data });
       })
       .catch((err) => console.log(err));
@@ -44,11 +43,11 @@ const Home = () => {
 
   return (
     <div>
-      <Header />
+      <Header {...user} />
       <div className={classes.root}>
         <div className={classes.container}>
           {/* <User /> */}
-          {user.psid ? <ComicPage {...user} /> : null}
+          {user.psid ? <ComicPage id={user.psid} /> : null}
         </div>
       </div>
     </div>
