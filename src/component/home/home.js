@@ -28,6 +28,7 @@ const Home = () => {
     return null;
   }
 
+  console.log("home");
   const getUserInfo = () => {
     const id = readCookie("upid");
     API.get(`/api/v1/users/${id}`)
@@ -39,8 +40,7 @@ const Home = () => {
 
   useEffect(() => {
     getUserInfo();
-    return () => {};
-  });
+  }, [user.id]);
 
   return (
     <div>
