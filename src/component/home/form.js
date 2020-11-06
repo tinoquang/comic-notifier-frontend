@@ -9,11 +9,11 @@ const useStyles = makeStyles({
   },
 });
 
-const Form = (props) => {
+const AddComicForm = (props) => {
   const classes = useStyles();
 
   const [value, setValue] = useState("");
-  const [err, setErr] = useState(false);
+  const [status, setStatus] = useState("");
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -21,6 +21,8 @@ const Form = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setStatus("");
+
     if (value === "") {
       return;
     }
@@ -29,10 +31,11 @@ const Form = (props) => {
     formData.append("comic", value);
     API.post(`/api/v1/users/${props.id}/comics`, formData)
       .then((response) => {
-        setErr(false);
+        setStatus("Success !!!");
+        window.location.reload();
       })
       .catch((err) => {
-        setErr(true);
+        setStatus("Your URL seems not right !!!");
       });
 
     setValue("");
@@ -51,9 +54,9 @@ const Form = (props) => {
         </label>
         <input type="submit" value="Add" />
       </form>
-      {err ? <span>URL is incorrect</span> : null}
+      <span>{status}</span>
     </div>
   );
 };
 
-export default Form;
+export default AddComicForm;

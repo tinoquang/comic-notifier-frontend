@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import Header from "./header";
 import User from "../user";
-import Form from "./form";
+import AddComicForm from "./form";
 import ComicPage from "../comic";
 import API from "../../utils/api";
 const useStyles = makeStyles((theme) => ({
@@ -40,14 +40,14 @@ const Home = () => {
   useEffect(() => {
     getUserInfo();
     return () => {};
-  }, []);
+  });
 
   return (
     <div>
       <Header {...user} />
       <div className={classes.root}>
         <div className={classes.form}>
-          <Form id={user.psid} />
+          <AddComicForm id={user.psid} />
         </div>
         <div className={classes.container}>
           {/* <User /> */}

@@ -13,37 +13,53 @@ const useStyles = makeStyles((theme) => ({
   // Page style
 }));
 
-const Comic = ({ page, name, url, latestChap, imgURL, chapURL }) => {
+const Comic = ({ _, userID, comic }) => {
   const classes = useStyles();
+
+  const unsubscribeComic = (event) => {
+    event.preventDefault();
+    API.delete(`api/v1/users/${userID}/comics/${comic.id}`)
+      .then(() => window.location.reload())
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div className={classes.card}>
       <div className={classes.avatar}>
-        <a href={url} target="_blank" rel="noopener noreferrer">
-          <img src={imgURL} alt="" style={{ height: "auto", width: "150px" }} />
+        <a href={comic.url} target="_blank" rel="noopener noreferrer">
+          <img
+            src={comic.imgURL}
+            alt=""
+            style={{ height: "auto", width: "150px" }}
+          />
         </a>
       </div>
       <div className={classes.cardInfo}>
         <a
           className={classes.name}
-          href={url}
+          href={comic.url}
           target="_blank"
           rel="noopener noreferrer"
         >
-          {name}
+          {comic.name}
         </a>
-        <div className={classes.comicPage}>{page}</div>
+        <div className={classes.comicPage}>{comic.page}</div>
         <div className={classes.chapter}>
-          <span>{latestChap}</span>
+          <span>{comic.latestChap}</span>
         </div>
         <a
-          href={chapURL}
+          href={comic.chapURL}
           className="btn btn-success btn-read"
           target="_blank"
           rel="noopener noreferrer"
         >
           Đọc ngay
         </a>
-        <div type="button" className="btn btn-danger btn-delete">
+        <div
+          type="button"
+          className="btn btn-danger btn-delete"
+          onClick={unsubscribeComic}
+        >
           Xóa
         </div>
       </div>
@@ -58,7 +74,6 @@ const ComicPage = (props) => {
   const getUserComics = (userID) => {
     API.get(`api/v1/users/${userID}/comics`)
       .then((response) => {
-        console.log(response.data.comics);
         setComics(response.data.comics);
       })
       .catch((err) => console.log(err));
@@ -66,12 +81,12 @@ const ComicPage = (props) => {
 
   useEffect(() => {
     getUserComics(props.id);
-  }, []);
+  }, [props.id]);
 
   return (
     <div className={classes.page}>
       {comics.map((comic) => (
-        <Comic key={comic.id} {...comic} />
+        <Comic key={comic.id} userID={props.id} comic={comic} />
       ))}
     </div>
   );
