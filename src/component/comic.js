@@ -18,19 +18,29 @@ const Comic = ({ page, name, url, latestChap, imgURL, chapURL }) => {
   return (
     <div className={classes.card}>
       <div className={classes.avatar}>
-        <a href={url} target="_blank">
+        <a href={url} target="_blank" rel="noopener noreferrer">
           <img src={imgURL} alt="" style={{ height: "auto", width: "150px" }} />
         </a>
       </div>
       <div className={classes.cardInfo}>
-        <a className={classes.name} href={url} target="_blank">
+        <a
+          className={classes.name}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {name}
         </a>
         <div className={classes.comicPage}>{page}</div>
         <div className={classes.chapter}>
           <span>{latestChap}</span>
         </div>
-        <a href={chapURL} className="btn btn-success btn-read" target="_blank">
+        <a
+          href={chapURL}
+          className="btn btn-success btn-read"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Đọc ngay
         </a>
         <div type="button" className="btn btn-danger btn-delete">
