@@ -1,8 +1,8 @@
 import React from "react";
-import API from "../utils/api";
+import API from "../../utils/api";
 import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
+import DelPopUp from "./popup";
 
 const useStyles = makeStyles((theme) => ({
   // Card style
@@ -14,47 +14,19 @@ const useStyles = makeStyles((theme) => ({
   // Page style
 }));
 
-const DelComicPopUp = ({ userID, comic, close }) => {
-  const classes = useStyles;
-
-  console.log(userID, comic);
-  const confirmDelete = (event) => {
-    event.preventDefault();
-    API.delete(`api/v1/users/${userID}/comics/${comic.id}`)
-      .then(() => window.location.reload())
-      .catch((err) => console.log(err));
-  };
-
-  return (
-    <div className={classes.root}>
-      <div className={classes.alertMsg}>
-        <div>Are you sure to unsubscribe</div>
-        <div>{comic.name}</div>
-      </div>
-      <Button variant="contained" color="primary" onClick={confirmDelete}>
-        Yes
-      </Button>
-      <Button variant="contained" color="secondary" onClick={close}>
-        No
-      </Button>
-    </div>
-  );
-};
-
 const Comic = ({ _, userID, comic }) => {
   const classes = useStyles();
 
-  const [PopUp, setPopUp] = useState(false);
+  const [modal, setModal] = useState(false);
 
-  const showPopUp = (event) => {
+  const showModal = (event) => {
     event.preventDefault();
-    console.log("show popup");
-    setPopUp(true);
+    console.log("show modal");
+    setModal(true);
   };
-  const closePopUp = (event) => {
+  const closeModal = (event) => {
     event.preventDefault();
-    console.log("close popup");
-    setPopUp(false);
+    setModal(false);
   };
 
   return (
@@ -93,15 +65,13 @@ const Comic = ({ _, userID, comic }) => {
           <div
             type="button"
             className="btn btn-danger btn-delete"
-            onClick={showPopUp}
+            onClick={showModal}
           >
             Xóa
           </div>
         </div>
       </div>
-      {PopUp ? (
-        <DelComicPopUp userID={userID} comic={comic} close={closePopUp} />
-      ) : null}
+      <DelPopUp userID={userID} comic={comic} open={modal} close={closeModal} />
     </div>
   );
 };

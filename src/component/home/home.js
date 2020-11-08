@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core";
 import Header from "./header";
 import User from "../user";
 import AddComicForm from "./form";
-import ComicPage from "../comic";
+import ComicPage from "../comic/page";
 import API from "../../utils/api";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,7 +28,6 @@ const Home = () => {
     return null;
   }
 
-  console.log("home");
   const getUserInfo = () => {
     const id = readCookie("upid");
     API.get(`/api/v1/users/${id}`)
