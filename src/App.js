@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import Home from "./component/home/home";
-import API from "./utils/api";
+import API from "./component/utils/api";
 import Login from "./component/login";
 
 class App extends React.Component {

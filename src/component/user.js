@@ -1,5 +1,5 @@
 import React from "react";
-import API from "../utils/api";
+import API from "../component/utils/api";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({

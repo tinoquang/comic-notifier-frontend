@@ -1,8 +1,9 @@
 import React from "react";
-import API from "../../utils/api";
+import API from "../utils/api";
 import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core";
 import DelPopUp from "./popup";
+import Pagination from "@material-ui/lab/Pagination";
 
 const useStyles = makeStyles((theme) => ({
   // Card style
@@ -77,8 +78,10 @@ const Comic = ({ _, userID, comic }) => {
 };
 
 const ComicPage = (props) => {
+  const limit = 4;
   const classes = useStyles();
   const [comics, setComics] = useState([]);
+  const [page, setPage] = useState(1);
 
   const getUserComics = (userID) => {
     API.get(`api/v1/users/${userID}/comics`)
@@ -88,15 +91,23 @@ const ComicPage = (props) => {
       .catch((err) => console.log(err));
   };
 
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
+
   useEffect(() => {
-    getUserComics(props.id);
+    getUserComics(props.userID);
   }, [props.id]);
 
   return (
     <div className={classes.comicPage}>
-      {comics.map((comic) => (
-        <Comic key={comic.id} userID={props.id} comic={comic} />
+      {comics.slice((page - 1) * limit, page * limit).map((comic) => (
+        <Comic key={comic.id} userID={props.userID} comic={comic} />
       ))}
+      <Pagination
+        count={Math.ceil(comics.length / 4)}
+        onChange={handleChange}
+      />
     </div>
   );
 };

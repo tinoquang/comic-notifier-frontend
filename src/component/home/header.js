@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, IconButton, Toolbar } from "@material-ui/core";
-import API from "../../utils/api";
+import API from "../utils/api";
 
 const useStyles = makeStyles({
   appbar: {

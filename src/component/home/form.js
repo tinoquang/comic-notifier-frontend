@@ -1,11 +1,14 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
-import { useState } from "react";
-import API from "../../utils/api";
+import { useState, useReducer } from "react";
+import API from "../utils/api";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles({
   form: {
     display: "flex",
+    height: "50px",
   },
 });
 
@@ -14,6 +17,7 @@ const AddComicForm = (props) => {
 
   const [value, setValue] = useState("");
   const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -21,24 +25,25 @@ const AddComicForm = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setStatus("");
-
     if (value === "") {
       return;
     }
 
+    setValue("");
+    setLoading(true);
+
     const formData = new FormData();
     formData.append("comic", value);
-    API.post(`/api/v1/users/${props.id}/comics`, formData)
+    API.post(`/api/v1/users/${props.userID}/comics`, formData)
       .then((response) => {
+        setLoading(false);
         setStatus("Success !!!");
         window.location.reload();
       })
       .catch((err) => {
+        setLoading(false);
         setStatus("Your URL seems not right !!!");
       });
-
-    setValue("");
   };
 
   return (
@@ -46,13 +51,14 @@ const AddComicForm = (props) => {
       <form onSubmit={handleSubmit}>
         <label>
           <input
+            name="comic"
             type="text"
             value={value}
             onChange={handleChange}
-            placeholder="Use comic URL here..."
+            placeholder="Add comic URL here..."
           />
         </label>
-        <input type="submit" value="Add" />
+        {loading ? <CircularProgress /> : <Button type="submit">Add</Button>}
       </form>
       <span>{status}</span>
     </div>

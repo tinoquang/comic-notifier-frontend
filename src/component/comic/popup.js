@@ -1,5 +1,5 @@
 import React from "react";
-import API from "../../utils/api";
+import API from "../utils/api";
 import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core";
 import { Dialog, DialogTitle, DialogContent } from "@material-ui/core";

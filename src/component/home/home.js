@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import Header from "./header";
 import User from "../user";
-import AddComicForm from "./form";
 import ComicPage from "../comic/page";
-import API from "../../utils/api";
+import API from "../utils/api";
+import AddComicForm from "./form";
+import SearchBar from "./searchBar";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100%",
@@ -39,18 +41,19 @@ const Home = () => {
 
   useEffect(() => {
     getUserInfo();
-  }, [user.id]);
+  }, []);
 
   return (
     <div>
       <Header {...user} />
       <div className={classes.root}>
-        <div className={classes.form}>
-          <AddComicForm id={user.psid} />
-        </div>
         <div className={classes.container}>
+          <div className={classes.form}>
+            <AddComicForm userID={user.psid} />
+            <SearchBar userID={user.psid} />
+          </div>
           {/* <User /> */}
-          {user.psid ? <ComicPage id={user.psid} /> : null}
+          {user.psid ? <ComicPage userID={user.psid} /> : null}
         </div>
       </div>
     </div>
