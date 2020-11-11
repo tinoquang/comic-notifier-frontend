@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Header = ({ name, profile_pic }) => {
+const Header = ({ psid, name, profile_pic }) => {
   const classes = useStyles();
 
   const logout = () => {
@@ -54,15 +54,17 @@ const Header = ({ name, profile_pic }) => {
           />
           <div className={classes.appbarName}>Comic Notify</div>
         </div>
-        <img
-          className={classes.avatar}
-          src={profile_pic}
-          alt=""
-          style={{ height: "auto", width: "35px" }}
-        />
-        <IconButton className={classes.logoutButton} onClick={logout}>
-          Log Out
-        </IconButton>
+        <div>
+          <img
+            className={classes.avatar}
+            src={profile_pic}
+            alt=""
+            style={{ height: "auto", width: "35px" }}
+          />
+          <IconButton className={classes.logoutButton} onClick={logout}>
+            Log Out
+          </IconButton>
+        </div>
       </Toolbar>
     </AppBar>
   );

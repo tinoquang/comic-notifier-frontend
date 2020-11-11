@@ -5,7 +5,6 @@ import User from "../user";
 import ComicPage from "../comic/page";
 import API from "../utils/api";
 import AddComicForm from "./form";
-import SearchBar from "./searchBar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,10 +47,9 @@ const Home = () => {
       <Header {...user} />
       <div className={classes.root}>
         <div className={classes.container}>
-          <div className={classes.form}>
+          {/* <div className={classes.form}>
             <AddComicForm userID={user.psid} />
-            <SearchBar userID={user.psid} />
-          </div>
+          </div> */}
           {/* <User /> */}
           {user.psid ? <ComicPage userID={user.psid} /> : null}
         </div>

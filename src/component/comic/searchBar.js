@@ -18,26 +18,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchBar(props) {
+export default function SearchBar({ value, onChange, onClick }) {
   const classes = useStyles();
-
-  const [value, setValue] = useState("");
-
-  const handleClick = (event) => {
-    event.preventDefault();
-
-    API.get(`api/v1/users/${props.userID}/comics`, {
-      params: {
-        q: value,
-      },
-    })
-      .then((response) => console.log(response))
-      .catch((err) => console.log(err));
-  };
-
-  const handeChange = (event) => {
-    setValue(event.target.value);
-  };
 
   return (
     <div>
@@ -47,13 +29,14 @@ export default function SearchBar(props) {
           id="standard-basic"
           placeholder="Search your comic"
           value={value}
-          onChange={handeChange}
+          onChange={onChange}
         />
         <IconButton
           className={classes.margin}
-          onClick={handleClick}
+          onClick={onClick}
           type="submit"
           size="medium"
+          // disabled={!value}
         >
           <SearchIcon fontSize="inherit" />
         </IconButton>

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core";
 import DelPopUp from "./popup";
 import Pagination from "@material-ui/lab/Pagination";
+import SearchBar from "./searchBar";
 
 const useStyles = makeStyles((theme) => ({
   // Card style
@@ -80,6 +81,8 @@ const Comic = ({ _, userID, comic }) => {
 const ComicPage = (props) => {
   const limit = 4;
   const classes = useStyles();
+
+  const [searchValue, setSearchValue] = useState("");
   const [comics, setComics] = useState([]);
   const [page, setPage] = useState(1);
 
@@ -91,7 +94,30 @@ const ComicPage = (props) => {
       .catch((err) => console.log(err));
   };
 
-  const handleChange = (event, value) => {
+  const handleSearchClick = (event) => {
+    event.preventDefault();
+
+    if (searchValue === "") {
+      getUserComics(props.userID);
+      return;
+    }
+    API.get(`api/v1/users/${props.userID}/comics`, {
+      params: {
+        q: searchValue,
+      },
+    })
+      .then((response) => {
+        setSearchValue("");
+        setComics(response.data.comics);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchValue(event.target.value);
+  };
+
+  const handlePageChange = (event, value) => {
     setPage(value);
   };
 
@@ -100,14 +126,25 @@ const ComicPage = (props) => {
   }, [props.id]);
 
   return (
-    <div className={classes.comicPage}>
-      {comics.slice((page - 1) * limit, page * limit).map((comic) => (
-        <Comic key={comic.id} userID={props.userID} comic={comic} />
-      ))}
-      <Pagination
-        count={Math.ceil(comics.length / 4)}
-        onChange={handleChange}
+    <div>
+      <SearchBar
+        value={searchValue}
+        onChange={handleSearchChange}
+        onClick={handleSearchClick}
       />
+      {comics.length !== 0 ? (
+        <div className={classes.comicPage}>
+          {comics.slice((page - 1) * limit, page * limit).map((comic) => (
+            <Comic key={comic.id} userID={props.userID} comic={comic} />
+          ))}
+          <Pagination
+            count={Math.ceil(comics.length / 4)}
+            onChange={handlePageChange}
+          />
+        </div>
+      ) : (
+        <div>Not Found</div>
+      )}
     </div>
   );
 };
