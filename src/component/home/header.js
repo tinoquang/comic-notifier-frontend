@@ -5,7 +5,7 @@ import API from "../utils/api";
 
 const useStyles = makeStyles({
   appbar: {
-    background: "none",
+    background: "white",
     color: "#000",
     fontFamily: "Nunito",
     position: "sticky",

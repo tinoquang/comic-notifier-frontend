@@ -6,7 +6,12 @@ import ComicPage from "../comic/page";
 import API from "../utils/api";
 import AddComicForm from "./form";
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: "100%",
+    backgroundColor: "#F5F5F5",
+  },
+}));
 
 const Home = () => {
   const classes = useStyles();

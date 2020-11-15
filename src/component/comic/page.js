@@ -10,7 +10,6 @@ import Comic from "./comic";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    height: "100%",
     width: "60%",
     margin: "0 auto",
   },
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ComicPage = (props) => {
-  const limit = 4;
+  const limit = 6;
   const classes = useStyles();
 
   const [searchValue, setSearchValue] = useState("");
@@ -85,14 +84,14 @@ const ComicPage = (props) => {
         <div className={classes.page}>
           <Grid container spacing={2}>
             {comics.slice((page - 1) * limit, page * limit).map((comic) => (
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <Comic key={comic.id} userID={props.userID} comic={comic} />
               </Grid>
             ))}
           </Grid>
           <div className={classes.pagination}>
             <Pagination
-              count={Math.ceil(comics.length / 4)}
+              count={Math.ceil(comics.length / limit)}
               onChange={handlePageChange}
             />
           </div>
