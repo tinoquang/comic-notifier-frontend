@@ -1,7 +1,7 @@
 import DelPopUp from "./popup";
 import React from "react";
-import { useState, useEffect } from "react";
-import { makeStyles, useTheme } from "@material-ui/core";
+import { useState } from "react";
+import { makeStyles } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -21,13 +21,14 @@ const useStyles = makeStyles((theme) => ({
     height: "350px",
     margin: "auto",
   },
+
   media: {
     backgroundColor: "gray",
     margin: "auto",
     width: "400px",
     height: "200px",
   },
-  title: {
+  comicInfo: {
     overflow: "hidden",
     textOverflow: "ellipsis",
   },
@@ -52,16 +53,22 @@ export default function Comic({ _, userID, comic }) {
 
   return (
     <Card className={classes.root}>
-      <CardMedia
-        className={classes.media}
-        component="img"
-        alt={comic.name}
-        image={comic.imgURL}
-        title={comic.name}
-      />
+      <Link href={comic.chapURL} target="_blank" rel="noopener noreferrer">
+        <CardMedia
+          className={classes.media}
+          component="img"
+          alt={comic.name}
+          image={comic.imgURL}
+        />
+      </Link>
+
       <div className={classes.details}>
         <CardContent className={classes.content}>
-          <Typography className={classes.title} component="div" variant="title">
+          <Typography
+            className={classes.comicInfo}
+            component="div"
+            variant="title"
+          >
             <Tooltip
               classes={{ tooltip: classes.noMaxWidth }}
               title={<span style={{ fontSize: "1.25rem" }}>{comic.name}</span>}
@@ -85,7 +92,7 @@ export default function Comic({ _, userID, comic }) {
             </Tooltip>
           </Typography>
           <Typography
-            className={classes.title}
+            className={classes.comicInfo}
             component="div"
             variant="latest-chap"
             color="textSecondary"
@@ -105,6 +112,7 @@ export default function Comic({ _, userID, comic }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
+                  marinTop: "5px",
                   color: "inherit",
                   fontSize: "0.75rem",
                   whiteSpace: "nowrap",
@@ -116,7 +124,7 @@ export default function Comic({ _, userID, comic }) {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <Typography style={{ color: "#C0C0C0", marginLeft: "10px" }}>
+          <Typography style={{ color: "	#808080", marginLeft: "10px" }}>
             {comic.page}
           </Typography>
 

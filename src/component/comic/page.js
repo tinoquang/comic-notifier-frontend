@@ -3,7 +3,6 @@ import API from "../utils/api";
 import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import Pagination from "@material-ui/lab/Pagination";
 import SearchBar from "./searchBar";
 import Comic from "./comic";
@@ -29,6 +28,7 @@ const ComicPage = (props) => {
   const limit = 6;
   const classes = useStyles();
 
+  const [getComic, setGetComic] = useState(true);
   const [searchValue, setSearchValue] = useState("");
   const [comics, setComics] = useState([]);
   const [page, setPage] = useState(1);
@@ -44,7 +44,9 @@ const ComicPage = (props) => {
   const handleSearchClick = (event) => {
     event.preventDefault();
 
+    setGetComic(false);
     if (searchValue === "") {
+      setPage(1);
       getUserComics(props.userID);
       return;
     }
@@ -70,7 +72,7 @@ const ComicPage = (props) => {
 
   useEffect(() => {
     getUserComics(props.userID);
-  }, [props.id]);
+  }, [props.userID]);
 
   return (
     <div className={classes.container}>
@@ -79,7 +81,6 @@ const ComicPage = (props) => {
         onChange={handleSearchChange}
         onClick={handleSearchClick}
       />
-
       {comics.length !== 0 ? (
         <div className={classes.page}>
           <Grid container spacing={2}>
@@ -97,7 +98,17 @@ const ComicPage = (props) => {
           </div>
         </div>
       ) : (
-        <div>Comic not found</div>
+        <div>
+          {getComic ? (
+            <div>
+              <h2>Bạn chưa đăng ký nhận thông báo cho truyện</h2>
+              <h4>Tutorial</h4>
+              <p>- Lấy đường dẫn của truyện trên website, ví dụ: </p>
+            </div>
+          ) : (
+            <div>Không tìm thấy truyện</div>
+          )}
+        </div>
       )}
     </div>
   );

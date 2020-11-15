@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import Header from "./header";
-import User from "../user";
 import ComicPage from "../comic/page";
 import API from "../utils/api";
 import AddComicForm from "./form";
@@ -47,7 +46,6 @@ const Home = () => {
       {/* <div className={classes.form}>
         <AddComicForm userID={user.psid} />
       </div> */}
-      {/* <User /> */}
       {user.psid ? <ComicPage userID={user.psid} /> : null}
     </div>
   );
