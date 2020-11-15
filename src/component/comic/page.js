@@ -2,81 +2,29 @@ import React from "react";
 import API from "../utils/api";
 import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core";
-import DelPopUp from "./popup";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 import Pagination from "@material-ui/lab/Pagination";
 import SearchBar from "./searchBar";
+import Comic from "./comic";
 
 const useStyles = makeStyles((theme) => ({
-  // Card style
-  card: {
-    display: "flex",
-    border: "1px solid red",
+  container: {
+    height: "100%",
+    width: "60%",
+    margin: "0 auto",
   },
 
-  // Page style
+  // Page styling
+  page: {
+    // marginTop: "50px",
+  },
+  pagination: {
+    margin: "20px",
+    display: "flex",
+    justifyContent: "center",
+  },
 }));
-
-const Comic = ({ _, userID, comic }) => {
-  const classes = useStyles();
-
-  const [modal, setModal] = useState(false);
-
-  const showModal = (event) => {
-    event.preventDefault();
-    console.log("show modal");
-    setModal(true);
-  };
-  const closeModal = (event) => {
-    event.preventDefault();
-    setModal(false);
-  };
-
-  return (
-    <div>
-      <div className={classes.card}>
-        <div className={classes.avatar}>
-          <a href={comic.url} target="_blank" rel="noopener noreferrer">
-            <img
-              src={comic.imgURL}
-              alt=""
-              style={{ height: "auto", width: "150px" }}
-            />
-          </a>
-        </div>
-        <div className={classes.cardInfo}>
-          <a
-            className={classes.name}
-            href={comic.url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {comic.name}
-          </a>
-          <div className={classes.comicPage}>{comic.page}</div>
-          <div className={classes.chapter}>
-            <span>{comic.latestChap}</span>
-          </div>
-          <a
-            href={comic.chapURL}
-            className="btn btn-success btn-read"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Đọc ngay
-          </a>
-          <div
-            type="button"
-            className="btn btn-danger btn-delete"
-            onClick={showModal}
-          >
-            Xóa
-          </div>
-        </div>
-      </div>
-      <DelPopUp userID={userID} comic={comic} open={modal} close={closeModal} />
-    </div>
-  );
-};
 
 const ComicPage = (props) => {
   const limit = 4;
@@ -126,24 +74,31 @@ const ComicPage = (props) => {
   }, [props.id]);
 
   return (
-    <div>
+    <div className={classes.container}>
       <SearchBar
         value={searchValue}
         onChange={handleSearchChange}
         onClick={handleSearchClick}
       />
+
       {comics.length !== 0 ? (
-        <div className={classes.comicPage}>
-          {comics.slice((page - 1) * limit, page * limit).map((comic) => (
-            <Comic key={comic.id} userID={props.userID} comic={comic} />
-          ))}
-          <Pagination
-            count={Math.ceil(comics.length / 4)}
-            onChange={handlePageChange}
-          />
+        <div className={classes.page}>
+          <Grid container spacing={2}>
+            {comics.slice((page - 1) * limit, page * limit).map((comic) => (
+              <Grid item xs={6}>
+                <Comic key={comic.id} userID={props.userID} comic={comic} />
+              </Grid>
+            ))}
+          </Grid>
+          <div className={classes.pagination}>
+            <Pagination
+              count={Math.ceil(comics.length / 4)}
+              onChange={handlePageChange}
+            />
+          </div>
         </div>
       ) : (
-        <div>Not Found</div>
+        <div>Comic not found</div>
       )}
     </div>
   );

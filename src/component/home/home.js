@@ -6,13 +6,7 @@ import ComicPage from "../comic/page";
 import API from "../utils/api";
 import AddComicForm from "./form";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: "100%",
-    width: "60%",
-    margin: "0 auto",
-  },
-}));
+const useStyles = makeStyles((theme) => ({}));
 
 const Home = () => {
   const classes = useStyles();
@@ -43,17 +37,13 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div className={classes.root}>
       <Header {...user} />
-      <div className={classes.root}>
-        <div className={classes.container}>
-          {/* <div className={classes.form}>
-            <AddComicForm userID={user.psid} />
-          </div> */}
-          {/* <User /> */}
-          {user.psid ? <ComicPage userID={user.psid} /> : null}
-        </div>
-      </div>
+      {/* <div className={classes.form}>
+        <AddComicForm userID={user.psid} />
+      </div> */}
+      {/* <User /> */}
+      {user.psid ? <ComicPage userID={user.psid} /> : null}
     </div>
   );
 };
