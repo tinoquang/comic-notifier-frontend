@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { AppBar, IconButton, Toolbar } from "@material-ui/core";
+import { AppBar, Button, Toolbar } from "@material-ui/core";
 import API from "../utils/api";
 
 const useStyles = makeStyles({
@@ -25,7 +25,8 @@ const useStyles = makeStyles({
     margin: "auto 0",
   },
   logoutButton: {
-    fontSize: "1rem",
+    fontFamily: "Nunito",
+    fontSize: "0.75rem",
   },
   avatar: {
     borderRadius: "50%",
@@ -61,9 +62,9 @@ const Header = ({ psid, name, profile_pic }) => {
             alt=""
             style={{ height: "auto", width: "35px" }}
           />
-          <IconButton className={classes.logoutButton} onClick={logout}>
+          <Button className={classes.logoutButton} onClick={logout}>
             Log Out
-          </IconButton>
+          </Button>
         </div>
       </Toolbar>
     </AppBar>

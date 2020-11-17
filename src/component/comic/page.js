@@ -100,13 +100,11 @@ const ComicPage = (props) => {
       ) : (
         <div>
           {getComic ? (
-            <div>
-              <h2>Bạn chưa đăng ký nhận thông báo cho truyện</h2>
-              <h4>Tutorial</h4>
-              <p>- Lấy đường dẫn của truyện trên website, ví dụ: </p>
-            </div>
+            <h2>
+              Bạn chưa đăng ký nhận thông báo cho truyện, xem hướng dẫn tại đây
+            </h2>
           ) : (
-            <div>Không tìm thấy truyện</div>
+            <h5>Không tìm thấy truyện</h5>
           )}
         </div>
       )}
