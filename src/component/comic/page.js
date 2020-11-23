@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
   // Page styling
   page: {
-    // marginTop: "50px",
+    marginTop: "60px",
   },
   pagination: {
     margin: "20px",
@@ -41,9 +41,7 @@ const ComicPage = (props) => {
       .catch((err) => console.log(err));
   };
 
-  const handleSearchClick = (event) => {
-    event.preventDefault();
-
+  const handleSearchClick = () => {
     setGetComic(false);
     if (searchValue === "") {
       setPage(1);
@@ -66,6 +64,12 @@ const ComicPage = (props) => {
     setSearchValue(event.target.value);
   };
 
+  const handleSearchKeyPress = (event) => {
+    if(event.key === 'Enter') {
+      handleSearchClick();
+    }
+  }
+
   const handlePageChange = (event, value) => {
     setPage(value);
   };
@@ -76,16 +80,17 @@ const ComicPage = (props) => {
 
   return (
     <div className={classes.container}>
-      <SearchBar
+      {comics.length !== 0 ? <SearchBar
         value={searchValue}
         onChange={handleSearchChange}
         onClick={handleSearchClick}
-      />
+        onKeyPress={handleSearchKeyPress}
+      /> : null}
       {comics.length !== 0 ? (
         <div className={classes.page}>
           <Grid container spacing={2}>
             {comics.slice((page - 1) * limit, page * limit).map((comic) => (
-              <Grid item xs={4}>
+              <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <Comic key={comic.id} userID={props.userID} comic={comic} />
               </Grid>
             ))}

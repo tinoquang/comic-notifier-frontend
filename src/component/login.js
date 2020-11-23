@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   botName: {
     fontSize: "3rem",
+    textAlign: "center"
   },
   loginButton: {
     fontSize: "2.5rem",

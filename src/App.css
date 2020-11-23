@@ -1,3 +1,7 @@
+:root {
+  font-size: 16px; /* to have 1rem = 16px */
+}
+
 .App {
   text-align: center;
 }

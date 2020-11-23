@@ -63,7 +63,7 @@ export default function Comic({ _, userID, comic }) {
       </Link>
 
       <div className={classes.details}>
-        <CardContent className={classes.content}>
+        <CardContent className={classes.content} >
           <Typography
             className={classes.comicInfo}
             component="div"
@@ -123,7 +123,7 @@ export default function Comic({ _, userID, comic }) {
             </Tooltip>
           </Typography>
         </CardContent>
-        <CardActions disableSpacing>
+        <CardActions disableSpacing style={{padding: "5px"}}>
           <Typography style={{ color: "	#808080", marginLeft: "10px" }}>
             {comic.page}
           </Typography>

@@ -12,41 +12,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Home = () => {
+const Home = ({psid}) => {
   const classes = useStyles();
-
-  const [user, setUser] = useState({});
-  function readCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(";");
-    for (var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) === " ") c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-  }
-
-  const getUserInfo = () => {
-    const id = readCookie("upid");
-    API.get(`/api/v1/users/${id}`)
-      .then((response) => {
-        setUser({ ...response.data });
-      })
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    getUserInfo();
-  }, []);
 
   return (
     <div className={classes.root}>
-      <Header {...user} />
-      {/* <div className={classes.form}>
-        <AddComicForm userID={user.psid} />
-      </div> */}
-      {user.psid ? <ComicPage userID={user.psid} /> : null}
+      {/* <Header {...user} /> */}
+      <div className={classes.form}>
+        {/* <AddComicForm userID={psid} /> */}
+      </div>
+      {psid ? <ComicPage userID={psid} /> : null}
     </div>
   );
 };
