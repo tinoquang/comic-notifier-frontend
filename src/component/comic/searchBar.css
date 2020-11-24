@@ -1,25 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Inconsolata:700');
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-html,
-body {
-  width: 100%;
-  height: 100%;
-}
-body {
-  background: #252525;
-}
+
 .search-container {
   position: absolute;
   margin: 0 auto;
-  top: 5rem;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  width: 300px;
+  width: 225px;
   height: 100px;
 }
 .search-container .search {
@@ -76,7 +64,7 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
-  width: 50px;
+  width: 100%;
   height: 50px;
   outline: none;
   border: none;
@@ -96,12 +84,12 @@ body {
   cursor: pointer;
 }
 .search-container input:focus {
-  width: 300px;
+  width: 100%;
   opacity: 1;
   cursor: text;
 }
 .search-container input:focus ~ .search {
-  right: -250px;
+  right: -225px;
   background: #fafafa;
   z-index: 6;
 }

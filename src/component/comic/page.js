@@ -1,7 +1,7 @@
 import React from "react";
 import API from "../utils/api";
 import { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core";
+import { CircularProgress, makeStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Pagination from "@material-ui/lab/Pagination";
 import SearchBar from "./searchBar";
@@ -22,6 +22,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
   },
+  spinnerContainer: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    paddingTop: "2rem"
+  }
 }));
 
 const ComicPage = (props) => {
@@ -32,11 +38,13 @@ const ComicPage = (props) => {
   const [searchValue, setSearchValue] = useState("");
   const [comics, setComics] = useState([]);
   const [page, setPage] = useState(1);
+  const [isComicLoad, setIsComicLoad] = useState(false)
 
   const getUserComics = (userID) => {
     API.get(`api/v1/users/${userID}/comics`)
       .then((response) => {
         setComics(response.data.comics);
+        setIsComicLoad(true)
       })
       .catch((err) => console.log(err));
   };
@@ -80,30 +88,30 @@ const ComicPage = (props) => {
 
   return (
     <div className={classes.container}>
-      {comics.length !== 0 ? <SearchBar
+      {isComicLoad ? <SearchBar
         value={searchValue}
         onChange={handleSearchChange}
         onClick={handleSearchClick}
         onKeyPress={handleSearchKeyPress}
       /> : null}
-      {comics.length !== 0 ? (
+      {isComicLoad !== 0 ? (
         <div className={classes.page}>
-          <Grid container spacing={2}>
-            {comics.slice((page - 1) * limit, page * limit).map((comic) => (
-              <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                <Comic key={comic.id} userID={props.userID} comic={comic} />
-              </Grid>
-            ))}
-          </Grid>
-          <div className={classes.pagination}>
-            <Pagination
-              count={Math.ceil(comics.length / limit)}
-              onChange={handlePageChange}
-            />
-          </div>
-        </div>
-      ) : (
-        <div>
+          {comics.length !== 0 ? 
+          <div>
+            <Grid container spacing={2}>
+              {comics.slice((page - 1) * limit, page * limit).map((comic) => (
+                <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
+                  <Comic key={comic.id} userID={props.userID} comic={comic} />
+                </Grid>
+              ))}
+            </Grid>
+            <div className={classes.pagination}>
+              <Pagination
+                count={Math.ceil(comics.length / limit)}
+                onChange={handlePageChange}
+              />
+            </div>
+          </div> : <div>
           {getComic ? (
             <h2>
               Bạn chưa đăng ký nhận thông báo cho truyện, xem hướng dẫn tại đây
@@ -111,10 +119,16 @@ const ComicPage = (props) => {
           ) : (
             <h5>Không tìm thấy truyện</h5>
           )}
+        </div>}
+        </div>
+      ) : (
+        <div className={classes.spinnerContainer}>
+          <CircularProgress color="black"/>
         </div>
       )}
     </div>
   );
 };
+
 
 export default ComicPage;

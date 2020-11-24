@@ -57,10 +57,12 @@ const App = () => {
             {localStorage.getItem("logged") === "true" ? <Home psid={user.psid}/> : <Login /> }
           </Route>
           <Route path="/about">
-              <div>About</div>
+              <div>About</div> 
+              {/* TODO: Implement Page About  */}
             </Route>
             <Route path="/tutorial">
               <div>tutorial</div>
+              {/* TODO: Implement Page Tutorial  */}
             </Route>
         </Switch>
       </Router>

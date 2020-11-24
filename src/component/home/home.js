@@ -17,7 +17,6 @@ const Home = ({psid}) => {
 
   return (
     <div className={classes.root}>
-      {/* <Header {...user} /> */}
       <div className={classes.form}>
         {/* <AddComicForm userID={psid} /> */}
       </div>
