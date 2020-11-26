@@ -12,15 +12,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Home = ({psid}) => {
+const Home = ({ userID }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <div className={classes.form}>
-        {/* <AddComicForm userID={psid} /> */}
-      </div>
-      {psid ? <ComicPage userID={psid} /> : null}
+      <div className={classes.form}>{/* <AddComicForm userID={psid} /> */}</div>
+      {userID ? <ComicPage userID={userID} /> : null}
     </div>
   );
 };
