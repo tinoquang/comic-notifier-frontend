@@ -88,7 +88,7 @@ const Header = ({ psid, name, profile_pic }) => {
               </Button>
             </Box>
           </Hidden>
-          <Hidden smUp>
+          <Hidden mdUp>
             <HeaderMenu
               toAbout={toAbout}
               toTutorial={toTutorial}
