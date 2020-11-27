@@ -1,8 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
 import "./searchBar.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -19,13 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchBar({
-  value,
-  onChange,
-  onClick,
-  onKeyPress,
-  empty,
-}) {
+export default function SearchBar({ onChange, onKeyPress, empty }) {
   const classes = useStyles();
 
   return (

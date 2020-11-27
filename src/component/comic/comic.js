@@ -10,8 +10,6 @@ import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Tooltip from "@material-ui/core/Tooltip";
-import Fade from "@material-ui/core/Fade";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,7 +41,6 @@ export default function Comic({ _, userID, comic }) {
 
   const showModal = (event) => {
     event.preventDefault();
-    console.log("show modal");
     setModal(true);
   };
   const closeModal = (event) => {
@@ -61,87 +58,56 @@ export default function Comic({ _, userID, comic }) {
           image={comic.imgURL}
         />
       </Link>
-
-      <div className={classes.details}>
-        <CardContent className={classes.content} >
-          <Typography
-            className={classes.comicInfo}
-            component="div"
-            variant="title"
+      <CardContent className={classes.content}>
+        <Typography className={classes.comicInfo} component="div">
+          <Link
+            href={comic.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              color: "inherit",
+              fontSize: "1.5rem",
+              whiteSpace: "nowrap",
+            }}
           >
-            <Tooltip
-              classes={{ tooltip: classes.noMaxWidth }}
-              title={<span style={{ fontSize: "1.25rem" }}>{comic.name}</span>}
-              placement="top-start"
-              enterDelay={500}
-              TransitionComponent={Fade}
-              TransitionProps={{ timeout: 300 }}
-            >
-              <Link
-                href={comic.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  color: "inherit",
-                  fontSize: "1.5rem",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {comic.name}
-              </Link>
-            </Tooltip>
-          </Typography>
-          <Typography
-            className={classes.comicInfo}
-            component="div"
-            variant="latest-chap"
-            color="textSecondary"
+            {comic.name}
+          </Link>
+        </Typography>
+        <Typography
+          className={classes.comicInfo}
+          component="div"
+          color="textSecondary"
+        >
+          <Link
+            href={comic.chapURL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              marinTop: "5px",
+              color: "inherit",
+              fontSize: "0.75rem",
+              whiteSpace: "nowrap",
+            }}
           >
-            <Tooltip
-              classes={{ tooltip: classes.noMaxWidth }}
-              title={
-                <span style={{ fontSize: "1rem" }}>{comic.latestChap}</span>
-              }
-              placement="top-start"
-              enterDelay={500}
-              TransitionComponent={Fade}
-              TransitionProps={{ timeout: 300 }}
-            >
-              <Link
-                href={comic.chapURL}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  marinTop: "5px",
-                  color: "inherit",
-                  fontSize: "0.75rem",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {comic.latestChap}
-              </Link>
-            </Tooltip>
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing style={{padding: "5px"}}>
-          <Typography style={{ color: "	#808080", marginLeft: "10px" }}>
-            {comic.page}
-          </Typography>
-
-          <Tooltip title="Delete" arrow>
-            <IconButton
-              className={classes.delete}
-              aria-label="Delete"
-              onClick={showModal}
-              style={{
-                marginLeft: "auto",
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        </CardActions>
-      </div>
+            {comic.latestChap}
+          </Link>
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing style={{ padding: "5px" }}>
+        <Typography style={{ color: "	#808080", marginLeft: "10px" }}>
+          {comic.page}
+        </Typography>
+        <IconButton
+          className={classes.delete}
+          aria-label="Delete"
+          onClick={showModal}
+          style={{
+            marginLeft: "auto",
+          }}
+        >
+          <DeleteIcon />
+        </IconButton>
+      </CardActions>
       <DelPopUp userID={userID} comic={comic} open={modal} close={closeModal} />
     </Card>
   );

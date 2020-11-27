@@ -49,6 +49,7 @@ const App = () => {
   useEffect(() => {
     getUserInfo();
     checkLoginStatus();
+    // eslint-disable-next-line
   }, []);
 
   return (

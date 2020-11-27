@@ -2,10 +2,8 @@ import React from "react";
 import API from "../utils/api";
 import { useState, useEffect } from "react";
 import { CircularProgress, makeStyles } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
 import Pagination from "@material-ui/lab/Pagination";
 import SearchBar from "./searchBar";
-import Comic from "./comic";
 import ComicList from "./comicList";
 
 const useStyles = makeStyles((theme) => ({
@@ -131,7 +129,7 @@ const ComicPage = (props) => {
         </div>
       ) : (
         <div className={classes.spinnerContainer}>
-          <CircularProgress color="black" />
+          <CircularProgress color="inherit" />
         </div>
       )}
     </div>
