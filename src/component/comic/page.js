@@ -35,7 +35,7 @@ const ComicPage = (props) => {
   const limit = 6;
   const classes = useStyles();
 
-  const [getComic, setGetComic] = useState(true);
+  const [searchEmpty, setSeachEmpty] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [comics, setComics] = useState([]);
   const [page, setPage] = useState(1);
@@ -46,12 +46,12 @@ const ComicPage = (props) => {
       .then((response) => {
         setComics(response.data.comics);
         setIsComicLoad(true);
+        setSeachEmpty(false);
       })
       .catch((err) => console.log(err));
   };
 
   const handleSearchClick = () => {
-    setGetComic(false);
     if (searchValue === "") {
       setPage(1);
       getUserComics(props.userID);
@@ -64,7 +64,11 @@ const ComicPage = (props) => {
     })
       .then((response) => {
         setSearchValue("");
-        setComics(response.data.comics);
+        if (response.data.comics.length !== 0) {
+          setComics(response.data.comics);
+        } else {
+          setSeachEmpty(true);
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -75,6 +79,7 @@ const ComicPage = (props) => {
 
   const handleSearchKeyPress = (event) => {
     if (event.key === "Enter") {
+      event.target.value = "";
       handleSearchClick();
     }
   };
@@ -95,6 +100,7 @@ const ComicPage = (props) => {
           onChange={handleSearchChange}
           onClick={handleSearchClick}
           onKeyPress={handleSearchKeyPress}
+          empty={searchEmpty}
         />
       ) : null}
       {isComicLoad ? (
@@ -107,7 +113,6 @@ const ComicPage = (props) => {
                   limit={limit}
                   comics={comics}
                   userID={props.userID}
-                  getComic={getComic}
                 />
                 <div className={classes.pagination}>
                   <Pagination
@@ -117,16 +122,10 @@ const ComicPage = (props) => {
                 </div>
               </div>
             ) : (
-              <div>
-                {getComic ? (
-                  <h2>
-                    Bạn chưa đăng ký nhận thông báo cho truyện, xem hướng dẫn
-                    tại đây
-                  </h2>
-                ) : (
-                  <h5>Không tìm thấy truyện</h5>
-                )}
-              </div>
+              <h2>
+                Bạn chưa đăng ký nhận thông báo cho truyện, xem hướng dẫn tại
+                đây
+              </h2>
             )}
           </div>
         </div>
