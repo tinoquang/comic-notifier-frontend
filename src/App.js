@@ -5,6 +5,8 @@ import Home from "./component/home/home";
 import API from "./component/utils/api";
 import Login from "./component/login";
 import Header from "./component/home/header";
+import Tutorial from "./component/others/tutorial";
+import About from "./component/others/about";
 
 const App = () => {
   const [user, setUser] = useState({});
@@ -60,12 +62,10 @@ const App = () => {
           {isLogged ? <Home userID={user.appid} /> : <Login />}
         </Route>
         <Route path="/about">
-          <div>About</div>
-          {/* TODO: Implement Page About  */}
+          <About />
         </Route>
         <Route path="/tutorial">
-          <div>tutorial</div>
-          {/* TODO: Implement Page Tutorial  */}
+          <Tutorial />
         </Route>
       </Switch>
     </Router>
