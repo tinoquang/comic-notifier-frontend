@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { makeStyles } from '@material-ui/core'
-import Header from './header'
-import ComicPage from '../comic/page'
-import API from '../utils/api'
-import AddComicForm from './form'
+import React from "react";
+import { makeStyles } from "@material-ui/core";
+import ComicPage from "../comic/page";
 
 const useStyles = makeStyles(theme => ({
   root: {

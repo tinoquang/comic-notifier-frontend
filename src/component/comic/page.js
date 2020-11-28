@@ -1,12 +1,11 @@
-import React from 'react'
-import API from '../utils/api'
-import { useState, useEffect } from 'react'
-import { CircularProgress, makeStyles } from '@material-ui/core'
-import Grid from '@material-ui/core/Grid'
-import Pagination from '@material-ui/lab/Pagination'
-import SearchBar from './searchBar'
-import Comic from './comic'
-import ComicList from './comicList'
+import React from "react";
+import API from "../utils/api";
+import { useState, useEffect } from "react";
+import { CircularProgress, makeStyles } from "@material-ui/core";
+import Pagination from "@material-ui/lab/Pagination";
+import SearchBar from "./searchBar";
+import ComicList from "./comicList";
+
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -36,36 +35,42 @@ const ComicPage = props => {
   const limit = 6
   const classes = useStyles()
 
-  const [getComic, setGetComic] = useState(true)
-  const [searchValue, setSearchValue] = useState('')
-  const [comics, setComics] = useState([])
-  const [page, setPage] = useState(1)
-  const [isComicLoad, setIsComicLoad] = useState(false)
+
+  const [searchEmpty, setSeachEmpty] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [comics, setComics] = useState([]);
+  const [page, setPage] = useState(1);
+  const [isComicLoad, setIsComicLoad] = useState(false);
+
 
   const getUserComics = userID => {
     API.get(`api/v1/users/${userID}/comics`)
-      .then(response => {
-        setComics(response.data.comics)
-        setIsComicLoad(true)
+      .then((response) => {
+        setComics(response.data.comics);
+        setIsComicLoad(true);
+        setSeachEmpty(false);
       })
       .catch(err => console.log(err))
   }
 
   const handleSearchClick = () => {
-    setGetComic(false)
-    if (searchValue === '') {
-      setPage(1)
-      getUserComics(props.userID)
-      return
+    if (searchValue === "") {
+      setPage(1);
+      getUserComics(props.userID);
+      return;
     }
     API.get(`api/v1/users/${props.userID}/comics`, {
       params: {
         q: searchValue
       }
     })
-      .then(response => {
-        setSearchValue('')
-        setComics(response.data.comics)
+      .then((response) => {
+        setSearchValue("");
+        if (response.data.comics.length !== 0) {
+          setComics(response.data.comics);
+        } else {
+          setSeachEmpty(true);
+        }
       })
       .catch(err => console.log(err))
   }
@@ -74,9 +79,10 @@ const ComicPage = props => {
     setSearchValue(event.target.value)
   }
 
-  const handleSearchKeyPress = event => {
-    if (event.key === 'Enter') {
-      handleSearchClick()
+  const handleSearchKeyPress = (event) => {
+    if (event.key === "Enter") {
+      event.target.value = "";
+      handleSearchClick();
     }
   }
 
@@ -96,6 +102,7 @@ const ComicPage = props => {
           onChange={handleSearchChange}
           onClick={handleSearchClick}
           onKeyPress={handleSearchKeyPress}
+          empty={searchEmpty}
         />
       ) : null}
       {isComicLoad ? (
@@ -108,7 +115,6 @@ const ComicPage = props => {
                   limit={limit}
                   comics={comics}
                   userID={props.userID}
-                  getComic={getComic}
                 />
                 <div className={classes.pagination}>
                   <Pagination
@@ -118,22 +124,16 @@ const ComicPage = props => {
                 </div>
               </div>
             ) : (
-              <div>
-                {getComic ? (
-                  <h2>
-                    Bạn chưa đăng ký nhận thông báo cho truyện, xem hướng dẫn
-                    tại đây
-                  </h2>
-                ) : (
-                  <h5>Không tìm thấy truyện</h5>
-                )}
-              </div>
+              <h2>
+                Bạn chưa đăng ký nhận thông báo cho truyện, xem hướng dẫn tại
+                đây
+              </h2>
             )}
           </div>
         </div>
       ) : (
         <div className={classes.spinnerContainer}>
-          <CircularProgress color='inherit' />
+          <CircularProgress color="inherit" />
         </div>
       )}
     </div>
