@@ -64,9 +64,7 @@ export default function Login() {
   const classes = useStyles();
 
   const login = () => {
-    window.location.assign(
-      `https://www.facebook.com/v8.0/dialog/oauth?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&state=${process.env.REACT_APP_STATE}`
-    );
+    window.location.href = `https://www.facebook.com/v8.0/dialog/oauth?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&state=${process.env.REACT_APP_STATE}`;
   };
   return (
     <div className={classes.root}>

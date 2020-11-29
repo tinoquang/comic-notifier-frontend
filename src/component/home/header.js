@@ -79,11 +79,11 @@ const Header = ({ psid, name, profile_pic }) => {
         <Box display="flex" fontWeight="fontWeightLight" alignItems="center">
           <Hidden only={["xs", "sm"]}>
             <Box mr={2}>
-              <Button className={classes.logoutButton} onClick={toAbout}>
-                About
-              </Button>
               <Button className={classes.logoutButton} onClick={toTutorial}>
                 Tutorial
+              </Button>
+              <Button className={classes.logoutButton} onClick={toAbout}>
+                About
               </Button>
             </Box>
           </Hidden>
