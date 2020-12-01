@@ -10,20 +10,21 @@ import About from "./component/others/about";
 
 const App = () => {
   const [user, setUser] = useState({});
-  const [isLogged, setIsLogged] = useState(false);
 
   const checkLoginStatus = () => {
     API.get("/status")
       .then((response) => {
-        if (localStorage.getItem("logged") !== "true") {
-          localStorage.setItem("logged", "true");
-        }
-        let isLoggedStorage = JSON.parse(localStorage.getItem("logged"));
-        setIsLogged(isLoggedStorage);
+        localStorage.setItem("logged", "true");
       })
       .catch((err) => {
         localStorage.removeItem("logged");
+        setUser({});
       });
+  };
+
+  const clearLocalStorage = () => {
+    localStorage.removeItem("logged");
+    setUser({});
   };
 
   function readCookie(name) {
@@ -49,17 +50,23 @@ const App = () => {
   };
 
   useEffect(() => {
-    getUserInfo();
     checkLoginStatus();
+    getUserInfo();
     // eslint-disable-next-line
   }, []);
 
   return (
     <Router>
-      {isLogged ? <Header {...user} /> : null}
+      {localStorage.getItem("logged") ? (
+        <Header user={user} clearLocalStorage={clearLocalStorage} />
+      ) : null}
       <Switch>
         <Route path="/" exact>
-          {isLogged ? <Home userID={user.appid} /> : <Login />}
+          {localStorage.getItem("logged") ? (
+            <Home userID={user.appid} />
+          ) : (
+            <Login />
+          )}
         </Route>
         <Route path="/about">
           <About />

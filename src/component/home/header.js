@@ -37,16 +37,17 @@ const useStyles = makeStyles({
   },
 });
 
-const Header = ({ psid, name, profile_pic }) => {
+const Header = ({ user, clearLocalStorage }) => {
+  const { psid, name, profile_pic } = user;
   const classes = useStyles();
   const history = useHistory();
 
   const logout = () => {
     API.get("/logout")
       .then((response) => {
-        localStorage.removeItem("logged");
+        clearLocalStorage();
         history.push("/");
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((err) => console.log(err));
   };
