@@ -6,11 +6,18 @@ const useStyles = makeStyles((theme) => ({
     "& li": {
       marginBottom: "25px",
     },
+    overflowWrap: "break-word",
     fontFamily: "Nunito",
     width: "60%",
     margin: "60px auto",
     paddingBottom: "200px",
     fontSize: "1.2rem",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      fontSize: "1rem",
+      paddingRight: "32px",
+      paddingLeft: "32px",
+    },
   },
 }));
 

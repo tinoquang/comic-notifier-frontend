@@ -1,40 +1,39 @@
 import React from "react";
 import API from "../utils/api";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { CircularProgress, makeStyles } from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 import SearchBar from "./searchBar";
 import ComicList from "./comicList";
 
-
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
-    width: '60%',
-    margin: '0 auto'
+    width: "60%",
+    margin: "0 auto",
   },
 
   // Page styling
   page: {
-    marginTop: '60px'
+    marginTop: "60px",
   },
   pagination: {
-    margin: '20px',
-    paddingBottom: '10px',
-    display: 'flex',
-    justifyContent: 'center'
+    margin: "20px",
+    paddingBottom: "10px",
+    display: "flex",
+    justifyContent: "center",
   },
   spinnerContainer: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    paddingTop: '2rem'
-  }
-}))
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    paddingTop: "2rem",
+  },
+}));
 
-const ComicPage = props => {
-  const limit = 6
-  const classes = useStyles()
-
+const ComicPage = (props) => {
+  const limit = 6;
+  const classes = useStyles();
 
   const [searchEmpty, setSeachEmpty] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -42,16 +41,15 @@ const ComicPage = props => {
   const [page, setPage] = useState(1);
   const [isComicLoad, setIsComicLoad] = useState(false);
 
-
-  const getUserComics = userID => {
+  const getUserComics = (userID) => {
     API.get(`api/v1/users/${userID}/comics`)
       .then((response) => {
         setComics(response.data.comics);
         setIsComicLoad(true);
         setSeachEmpty(false);
       })
-      .catch(err => console.log(err))
-  }
+      .catch((err) => console.log(err));
+  };
 
   const handleSearchClick = () => {
     if (searchValue === "") {
@@ -61,8 +59,8 @@ const ComicPage = props => {
     }
     API.get(`api/v1/users/${props.userID}/comics`, {
       params: {
-        q: searchValue
-      }
+        q: searchValue,
+      },
     })
       .then((response) => {
         setSearchValue("");
@@ -72,27 +70,27 @@ const ComicPage = props => {
           setSeachEmpty(true);
         }
       })
-      .catch(err => console.log(err))
-  }
+      .catch((err) => console.log(err));
+  };
 
-  const handleSearchChange = event => {
-    setSearchValue(event.target.value)
-  }
+  const handleSearchChange = (event) => {
+    setSearchValue(event.target.value);
+  };
 
   const handleSearchKeyPress = (event) => {
     if (event.key === "Enter") {
       event.target.value = "";
       handleSearchClick();
     }
-  }
+  };
 
   const handlePageChange = (event, value) => {
-    setPage(value)
-  }
+    setPage(value);
+  };
 
   useEffect(() => {
-    getUserComics(props.userID)
-  }, [props.userID])
+    getUserComics(props.userID);
+  }, [props.userID]);
 
   return (
     <div className={classes.container}>
@@ -125,8 +123,8 @@ const ComicPage = props => {
               </div>
             ) : (
               <h2>
-                Bạn chưa đăng ký nhận thông báo cho truyện, xem hướng dẫn tại
-                đây
+                Bạn chưa đăng ký nhận thông báo cho truyện, xem hướng dẫn{" "}
+                <Link to="/tutorial">tại đây</Link>
               </h2>
             )}
           </div>
@@ -137,7 +135,7 @@ const ComicPage = props => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ComicPage
+export default ComicPage;

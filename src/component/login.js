@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,9 +63,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
+  const location = useLocation();
 
   const login = () => {
-    window.location.href = `https://www.facebook.com/v8.0/dialog/oauth?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&state=${process.env.REACT_APP_STATE}`;
+    window.location.href = `https://www.facebook.com/v8.0/dialog/oauth?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&state=${location.pathname}`;
   };
   return (
     <div className={classes.root}>

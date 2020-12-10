@@ -7,6 +7,8 @@ import HeaderMenu from "../comic/menu";
 
 const useStyles = makeStyles({
   appbar: {
+    height: "5rem",
+    maxHeight: "5rem",
     background: "white",
     color: "#000",
     fontFamily: "Nunito",
@@ -22,6 +24,12 @@ const useStyles = makeStyles({
   appbarTitle: {
     display: "flex",
     flex: "1",
+    height: "100%",
+    maxHeight: "5rem",
+  },
+  homeContainer: {
+    display: "flex",
+    maxHeight: "5rem",
   },
   appbarName: {
     padding: "auto",
@@ -65,17 +73,19 @@ const Header = ({ user, clearLocalStorage }) => {
   return (
     <AppBar className={classes.appbar}>
       <Toolbar className={classes.appbarWrapper}>
-        <div
-          className={classes.appbarTitle}
-          onClick={backToHome}
-          style={{ cursor: "pointer" }}
-        >
-          <img
-            src={"/assets/chatbot.svg"}
-            alt="logo"
-            style={{ height: "auto", width: "75px" }}
-          />
-          <div className={classes.appbarName}>Comic Notify</div>
+        <div className={classes.appbarTitle}>
+          <div
+            className={classes.homeContainer}
+            onClick={backToHome}
+            style={{ cursor: "pointer" }}
+          >
+            <img
+              src={"/assets/chatbot.svg"}
+              alt="logo"
+              style={{ height: "auto", width: "75px" }}
+            />
+            <div className={classes.appbarName}>Comic Notify</div>
+          </div>
         </div>
         <Box display="flex" fontWeight="fontWeightLight" alignItems="center">
           <Hidden only={["xs", "sm"]}>

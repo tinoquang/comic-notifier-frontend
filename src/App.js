@@ -60,21 +60,21 @@ const App = () => {
       {localStorage.getItem("logged") ? (
         <Header user={user} clearLocalStorage={clearLocalStorage} />
       ) : null}
-      <Switch>
-        <Route path="/" exact>
-          {localStorage.getItem("logged") ? (
+      {localStorage.getItem("logged") ? (
+        <Switch>
+          <Route path="/" exact>
             <Home userID={user.appid} />
-          ) : (
-            <Login />
-          )}
-        </Route>
-        <Route path="/about">
-          <About />
-        </Route>
-        <Route path="/tutorial">
-          <Tutorial />
-        </Route>
-      </Switch>
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/tutorial">
+            <Tutorial />
+          </Route>
+        </Switch>
+      ) : (
+        <Login />
+      )}
     </Router>
   );
 };
